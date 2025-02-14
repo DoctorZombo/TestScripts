@@ -4,7 +4,7 @@ import time
 import os
 
 admin = 'Hi_BAN_Bye'
-bot = telebot.TeleBot('7058950545:AAHODGyPGR5KgmKgXgNTpsKvHmZDfcq20HY')
+bot = telebot.TeleBot('')
 start_time = time.time()
 
 def format_time(seconds):
