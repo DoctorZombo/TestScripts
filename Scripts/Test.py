@@ -24,7 +24,7 @@ class MainWindow(QWidget):
 
     def add_image(self):
         label = QLabel()
-        pixmap = QPixmap('red.png')  # Укажите путь к вашему изображению
+        pixmap = QPixmap('images/red.png')  # Укажите путь к вашему изображению
         label.setPixmap(pixmap)
         self.layout.addWidget(label)
         self.images.append(label)

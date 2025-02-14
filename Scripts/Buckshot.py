@@ -11,13 +11,13 @@ class BuckShotApp(QWidget):
         #Макет кол-ва патронов (горизонт)
         for y in range(self.live_cartridge):
             image_red = QLabel()
-            pixmap = QPixmap('red.png')
+            pixmap = QPixmap('images/red.png')
             image_red.setPixmap(pixmap)
             self.Red.addWidget(image_red)
             self.live_cartridge_image.append(image_red)
         for z in range(self.blank_cartridge):
             image_blue = QLabel()
-            pixmap = QPixmap('blue.png')
+            pixmap = QPixmap('images/blue.png')
             image_blue.setPixmap(pixmap)
             self.Blue.addWidget(image_blue)
             self.blank_cartridge_image.append(image_blue)
@@ -40,9 +40,9 @@ class BuckShotApp(QWidget):
         self.stacked_layout = QStackedLayout()
         self.error_text = QLabel()
 
-        self.pixmax1 = QPixmap('red.png')
+        self.pixmax1 = QPixmap('images/red.png')
         self.image_red.setPixmap(self.pixmax1)
-        self.pixmax2 = QPixmap('blue.png')
+        self.pixmax2 = QPixmap('images/blue.png')
         self.image_blue.setPixmap(self.pixmax2)
         self.start_button.setFixedSize(100, 100)
         self.shotred_button.setFixedSize(100, 50)
@@ -199,6 +199,11 @@ class BuckShotApp(QWidget):
             image_red.deleteLater
         self.chance_live.setText('')
         self.stacked_layout.setCurrentIndex(0)
+    def closeEvent(self, event):
+        # Освобождение ресурсов перед закрытием
+        self.live_cartridge_image.clear()
+        self.blank_cartridge_image.clear()
+        event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
