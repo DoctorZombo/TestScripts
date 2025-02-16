@@ -5,10 +5,12 @@ import os
 import random
 import emoji
 list = [(1,1),  (1, 2), (2, 2), (1, 3), (3, 2), (2, 3), (3, 3), (2, 4), (3, 4), (4, 3), (4, 4), (3, 5)]
-human_hp = 6
-bot_hp = 6
+global red, blue, total, bot_hp_emoji, human_hp_emoji, human_hp, bot_hp
 bot_hp_emoji = ["❤", "❤", "❤", "❤", "❤", "❤"]
 human_hp_emoji = ["❤", "❤", "❤", "❤", "❤", "❤"]
+human_hp = 6
+bot_hp = 6
+
 
 
 admin = 'Hi_BAN_Bye'
@@ -75,15 +77,97 @@ def test(message):
 
 @bot.message_handler(commands=['buckshot'])
 def Buckshot(message):
+    markup = telebot.types.InlineKeyboardMarkup(row_width=1)
+    bot_button = telebot.types.InlineKeyboardButton('Диллер', callback_data='AttackBot')
+    yourself_button = telebot.types.InlineKeyboardButton('Вы', callback_data='AttackYourself')
+    markup.add(bot_button, yourself_button)
     def randomchoice(list):
+        global red, blue, total
         red, blue = list
-        bot = ''.join(bot_hp_emoji)
-        human = ''.join(human_hp_emoji)
-        bot.send_message(message.chat.id,'Патроны: \n'
+        total = red + blue
+        bot_emoji = ''.join(bot_hp_emoji)
+        human_emoji = ''.join(human_hp_emoji)
+        bot.send_message(message.chat.id, f'Патроны:\n'
                          f'{red} боевые\n'
                          f'{blue} холостые\n'
-                         f'Диллер: {bot}\n'
-                         f'Игрок: {human}')
+                         f'Диллер: {bot_emoji}\n'
+                         f'Игрок: {human_emoji}',
+                         reply_markup=markup)
     randomchoice(random.choice(list))
+@bot.callback_query_handler(func=lambda call:True)
+def callback(call):
+    def redshot(who):
+        global red, bot_hp, human_hp, bot_hp_emoji, human_hp_emoji
+        red -= 1
+        if who == 'bot':
+            bot_hp -= 1
+            bot_hp_emoji.pop()
+        elif who == 'human':
+            human_hp -= 1
+            human_hp_emoji.pop()
+        bot_emoji = ''.join(bot_hp_emoji)
+        human_emoji = ''.join(human_hp_emoji)
+        print('red', red, 'hp_bot', bot_hp, 'hp_human', human_hp)
+        bot.send_message(call.message.chat.id, f'Боевой патрон\n'
+                         f'Диллер: {bot_emoji}\n'
+                         f'Игрок: {human_emoji}')
 
+    def blueshot():
+        global blue, bot_hp_emoji, human_hp_emoji
+        blue -= 1
+        print('blue', blue)
+        bot_emoji = ''.join(bot_hp_emoji)
+        human_emoji = ''.join(human_hp_emoji)
+        bot.send_message(call.message.chat.id, f'Холостой патрон\n'
+                         f'Диллер: {bot_emoji}\n'
+                         f'Игрок: {human_emoji}')
+    def ChanceForBot():
+        global red, blue
+        red = red
+        blue = blue
+        total = red + blue
+        chance = red/total
+        return chance
+    def BotShot():
+        chance = ChanceForBot()
+        if chance > 0.5:
+            shot = random.choice([red, blue])
+            if shot == red and red != 0:
+                redshot('human')
+            elif shot == red and red == 0 and blue != 0:
+                blueshot()
+            elif shot == blue and blue != 0:
+                blueshot()
+            elif shot == blue and blue == 0 and red != 0:
+                redshot('human')
+            else:
+                print('Раунд закончен')
+            print('hey')
+        elif chance == 0.5:
+            
+    if call.message:
+        if call.data == 'AttackBot':
+            shot = random.choice([red, blue])
+            if shot == red and red != 0:
+                redshot('bot')
+            elif shot == red and red == 0 and blue != 0:
+                blueshot()
+            elif shot == blue and blue != 0:
+                blueshot()
+            elif shot == blue and blue == 0 and red != 0:
+                redshot('bot')
+            else:
+                print('Раунд закончен')
+        elif call.data == 'AttackYourself':
+            shot = random.choice([red, blue])
+            if shot == red and red != 0:
+                redshot('human')
+            elif shot == red and red == 0 and blue != 0:
+                blueshot()
+            elif shot == blue and blue != 0:
+                blueshot()
+            elif shot == blue and blue == 0 and red != 0:
+                redshot('human')
+            else:
+                print('Раунд закончен')
 bot.polling(none_stop=True)
