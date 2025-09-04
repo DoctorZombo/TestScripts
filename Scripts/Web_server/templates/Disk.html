@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-item {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 40px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+        .no-files {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Available Files</h1>
+
+    {% if files %}
+        <ul class="file-list">
+            {% for file in files %}
+                <li class="file-item">
+                    {{ file }}
+                    <a href="{{ url_for('download_file', filename=file) }}" class="download-btn">Download</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-files">No files available for download.</p>
+    {% endif %}
+</body>
+</html>

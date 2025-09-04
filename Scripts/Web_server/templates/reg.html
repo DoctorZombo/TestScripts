@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 0 40%; padding: 20px; }
+    </style>
+</head>
+<body>
+<form method="POST" >
+    {{ form.hidden_tag() }}
+
+    <h1>Регистрация</h1>
+    <p>Введите имя пользователя</p>
+    <label>
+        {{form.username}}
+    </label>
+    {% if form.username.errors %}
+    <span style="color: red;">{{ form.username.errors[0] }}</span>
+  {% endif %}
+    <p>Введите почту</p>
+    <label>
+        {{form.email}}
+    </label>
+    {% if form.email.errors %}
+    <span style="color: red;">{{ form.username.errors[0] }}</span>
+  {% endif %}
+    <p>Введите пароль</p>
+    <label>
+        {{form.password}}
+    </label>
+    {% if form.password.errors %}
+    <span style="color: red;">{{ form.username.errors[0] }}</span>
+  {% endif %}
+    <p>Повторите пароль</p>
+    <label>
+        {{form.repeat_password}}
+    </label>
+    {% if form.repeat_password.errors %}
+    <span style="color: red;">{{ form.username.errors[0] }}</span>
+  {% endif %}
+    <p><button type="submit">Зарегистрироваться</button></p>
+
+</form>
+</body>
+</html>

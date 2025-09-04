@@ -1,0 +1,18 @@
+img{
+width: 300px;
+height: 400px;
+}
+.container {
+            display: flex; /* Включаем Flexbox */
+            align-items: flex-start; /* Выравниваем элементы по вертикали */
+            gap: 20px; /* Расстояние между картинкой и текстом */
+            font-family: "Arial black";
+            font-size: 20px;
+        }
+body{
+margin: 0; /* Убирает отступы браузера */
+    background-image: url('background.jpg'); /* Укажите путь к вашей картинке */
+    background-size: cover; /* Растяжение картинки на всю страницу */
+    background-repeat: no-repeat; /* Чтобы фон не повторялся */
+    background-position: center; /* Центрирование картинки */
+}

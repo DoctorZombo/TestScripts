@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+        }
+
+        .base-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay-image {
+            position: absolute;
+            width: 30%;
+            height: auto;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .overlay-text {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            white-space: nowrap;
+            z-index: 20;
+        }
+
+        .overlay-image:hover + .overlay-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body style="margin: 0; background-color: black;">
+<div >
+    <h1 style="color: white; text-align: center; font-family: 'Arial Black'">Речи великих людей</h1>
+</div>
+
+<div class="image-container">
+        <img style="width: 100vw; height: 100vh;" src="Map.jpg" alt="Картинка 1" class="base-image">
+        <a href="Part2.html"><img style="top: 35%; left: 80%;" src="point.png" alt="Картинка 2" class="overlay-image">
+        <div style ="top: 30%;left: 95%;" class="overlay-text">Речи с 1950 по 2000 года</div></a>
+
+        <a href="Part1.html"><img style="top: 30%; left: 325%;"src="point.png" alt="Картинка 2" class="overlay-image">
+        <div style ="top: 25%;left: 340%;" class="overlay-text">Речи с 1930 годов по 1950 года</div></a>
+
+    </div>
+
+</body>
+</html>

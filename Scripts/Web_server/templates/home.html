@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Загрузка файлов</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 0 auto; padding: 20px; }
+        .form { margin: 20px 0; }
+        .message { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Загрузить файл</h1>
+    {{total_size}}/{{max_size_mb}}mb
+    <a href="/logout">Выйти</a>
+    <form class="form" method="POST" enctype="multipart/form-data" action="{{url_for('accept', folder_path=contents['current_path'])}}">
+        <input type="file" name="file">
+        <button type="submit">Загрузить</button>
+    </form>
+
+    {% if message %}
+        <div class="message success">{{ message }}</div>
+    {% endif %}
+
+    {% if error %}
+        <div class="message error">{{ error }}</div>
+    {% endif %}
+
+{% if contents.subdirs %}
+<ul>
+    Папки
+ {% for folder in contents.subdirs %}
+    <li>
+    {{folder.name}}
+     <a href="{{ url_for('check', folder_path=folder.path) }}">Посмотреть</a>
+    </li>
+ {% endfor %}
+</ul>
+{% endif %}
+
+{% if contents.files %}
+<ul>
+    Файлы
+ {% for file in contents.files %}
+    <li>
+    {{file.name}}
+    <a href="{{ url_for('delete', file_path=file.path) }}">Удалить</a>
+    <a href="{{ url_for('download', file_path=file.path) }}">Скачать</a>
+    </li>
+ {% endfor %}
+</ul>
+ {% endif %}
+</body>
+<script>
+// После загрузки страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Заменяем текущую запись в истории браузера
+    history.replaceState(null, null, window.location.pathname);
+
+    // Блокируем навигацию "Назад"
+    window.addEventListener('popstate', function(event) {
+        history.pushState(null, null, window.location.pathname);
+    });
+});
+</script>
+</html>

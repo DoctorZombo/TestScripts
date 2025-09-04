@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 0 40%; padding: 20px; }
+    </style>
+</head>
+<body>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>Введите имя пользователя</p>
+    <label>{{form.username}}</label>
+    <p>Введите пароль</p>
+    <label>{{form.password}}</label>
+    <p><button type="submit">Войти</button></p>
+    <label>Нет аккаунта? <a href="/reg">Зарегистрируйтесь</a></label>
+</form>
+</body>
+</html>
